@@ -426,7 +426,7 @@ console.log(parsedCustomer);    // { firstName: 'A', lastName: 'Nguyễn', age: 
 
 /*-------------------------------- Phần 4: ĐIỀU KIÊN & VÒNG LẶP ---------------------------------*/
 /*----------------------- BT 4.1 ---------------------------*/
-// Câu lệnh điều kiện, Cho VD:
+// 1) Câu lệnh điều kiện, Cho VD:
 
 let age = 18;
 if (age >= 18){
@@ -434,4 +434,50 @@ if (age >= 18){
 }
 else{
     console.log("Bạn chưa đủ 18 tuổi");
+} // Sử dụng ` if `, ` else ` để kiểm tra điều kiện 
+
+// 2) Sử dụng toán tử 3 ngôi ` ?: ` cho các điều kiện đơn giản, cho VD:
+
+let date = new Date('2021-05-03'); // yyyy-mm-dd
+let dateValue = date.getDate();
+const dateString = date < 10? ` 0${dateValue} ` : dateValue;
+console.log("dateString: ", dateString);  // ===> dateString: 03
+
+/*----------------------- BT 4.2 ---------------------------*/
+// Vòng lặp
+// 1) ` for `, ` forEach `, ` for..in `, `for..of`, ` while `, ` do..while ` 
+/* (Dùng để lặp qua các đoạn mã một cách lặp đi lặp lại) */
+
+for (let i = 0; i < 5; i++){
+    console.log(i);
+} // sẽ tạo vòng lặp cho đến khi chạy đủ những số nhỏ hơn 5 (bắt đầu từ 0)
+
+let j = 0;
+while (j < 5){
+    console.log(j);
+    j++;
+} // Kết quả tương tự ví dụ trên
+
+// 2) Sử dụng ` break ` và ` continue ` để kiểm soát vòng lặp
+
+const customer = {
+    customerID: "ABC01",
+    customerName: "Nguyễn Văn A",
+    DateOfBirth: "1999-04-29" 
 }
+for (const prop in customer){
+    if (prop === "DateOfBirth"
+        && customer[prop] != null
+        && customer[prop] != undefined){
+            const dob = new Date(customer[prop])
+            console.log("Ngày sinh: ", dob); // Ngày sinh:  1999-04-29T00:00:00.000Z
+            break;
+        }
+    else{
+        continue;
+    }
+} 
+
+/*-------------------------------- Phần 5: HÀM ---------------------------------*/
+/*----------------------- BT 5.1 ---------------------------*/
+// Hàm
