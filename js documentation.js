@@ -115,8 +115,7 @@ function getData(){
 // Luôn sử dụng "let" và "const" thay cho var vì biến "var" sẽ chỉ sử dụng được ở trong phạm vi của function 
 //  còn biến "let" và "const" có thể sử dụng với phạm vi global và rộng hơn
 
-/*-------------------------------- Phần 2: Toán tử ---------------------------------*/
-/*----------------------- BT 2.1 ---------------------------*/
+/*----------------------- BT 1.5 ---------------------------*/
 // Tên gọi và cách nhận biết về các toán tử: 
 
 /* " + " - Toán tử cộng (Addition)
@@ -159,14 +158,15 @@ let a = 5; // 101
 let b = 3; // 011
 let result = a & b; // 001 (1)
 
-/*----------------------- BT 2.1 ---------------------------*/
+/*----------------------- BT 1.6 ---------------------------*/
 
 //Lưu ý khi sử dụng toán tử "So sánh"
 // == và != là kiểu so sánh tương đối, JS sẽ tự động chuyển về cùng kiểu rồi so sánh giá trị
 // === và !== là kiểu so sánh tuyệt đối, so sánh đúng kiểu và giá trị (Nhanh và chính xác hơn)
 // Khi sử dụng toán tử === và !== sẽ dẩm bảo tính logic và hiệu suất tốt hơn
 
-/*----------------------- BT 2.2 ---------------------------*/
+/*-------------------------------- Phần 2: Mảng ---------------------------------*/
+/*----------------------- BT 2.1 ---------------------------*/
 //  I)Cách tạo mảng
 // 1) Tạo mảng bằng cách đặt giá trị trong dấu ngoặc vuông []
 
@@ -303,10 +303,16 @@ var isOrangeInclude = fruits.includes("Orange");     // Có thì trả về true
 
 // VII) Kiểm tra mảng với .some() và .every()
 
-/* some(): Dùng để kiểm tra trong mảng có ít nhất 1 phần tử thoả mãn điều kiện hay không */
+/* some(): Dùng để kiểm tra trong mảng có "ít nhất 1 phần tử" thoả mãn điều kiện hay không */
 var numbers = [1, 3, 5, 7, 9]; // true: thoả mãn - false: không thoả mãn
-var hasEvenNumber = number.some(function(number){ // Kiểm tra xem có phần tử 
+var hasEvenNumber = number.some(function(number){ // Kiểm tra xem có phần tử nào 
     return number % 2 === 0;                      // chia hết cho 2 hay không
 });
-console.log(hasEvenNumber); //false
+console.log(hasEvenNumber); // false
 
+/* every(): Dùng để kiểm tra "tất cả các phần tử" trong mảng có thoả mãn điều kiện hay không*/
+var number = [2, 4, 6, 8, 10]; // true: thoả mãn - false: không thoả mãn
+var allAreEven = number.every(function(number){   // Kiểm tra xem tất cả phần tử
+    return number % 2 === 0;                      // có chia hết cho 2 không
+});
+console.log(allAreEven); // true
