@@ -1,7 +1,7 @@
 /* Có thể tìm danh mục bài tập và danh mục phần bành cách nhấn tổ hợp Ctrl + F và gõ BT/Phần + số danh mục muốn xem */
-/* !!! Sử dụng môi trưởng Console của trình duyệt Website hoặc note.js để làm môi trường chạy các ví dụ bên dưới !!! */
+/* !!! Sử dụng môi trưởng Console của trình duyệt Website hoặc node.js để làm môi trường chạy các ví dụ bên dưới !!! */
 
-/*--------------------------------Phần 1: Các biến---------------------------------*/
+/*--------------------------------Phần 1: BIẾN---------------------------------*/
 /*----------------------- BT 1.1 ---------------------------*/
 
 // Khai báo các biến "var, let, const"
@@ -165,7 +165,7 @@ let result = a & b; // 001 (1)
 // === và !== là kiểu so sánh tuyệt đối, so sánh đúng kiểu và giá trị (Nhanh và chính xác hơn)
 // Khi sử dụng toán tử === và !== sẽ dẩm bảo tính logic và hiệu suất tốt hơn
 
-/*-------------------------------- Phần 2: Mảng ---------------------------------*/
+/*-------------------------------- Phần 2: MẢNG ---------------------------------*/
 /*----------------------- BT 2.1 ---------------------------*/
 //  I)Cách tạo mảng
 // 1) Tạo mảng bằng cách đặt giá trị trong dấu ngoặc vuông []
@@ -316,3 +316,122 @@ var allAreEven = number.every(function(number){   // Kiểm tra xem tất cả p
     return number % 2 === 0;                      // có chia hết cho 2 không
 });
 console.log(allAreEven); // true
+
+/*-------------------------------- Phần 3: ĐỐI TƯỢNG ---------------------------------*/
+/* Giới thiệu: Khai báo đối tượng và truy cập, thao tác với các thuộc tính trong đối tượng */
+
+// Cho một đối tượng mẫu:
+var person = {
+    fullName: "Nguyễn Văn A",
+    age: 20
+};
+
+// Truy cập thuộc tính 
+console.log(person.fullName);    // Lấy trực tiếp giá trị
+console.log(person["fullName"]); // Lấy theo tên giá trị
+
+// Thêm thuộc tính mới
+person.gender = "Nam";
+
+// Sửa đổi giá trị thuộc tính
+person.age = 25;
+
+// Xoá thuộc tính
+delete person.gender;
+
+// Kiểm tra sự tồn tại của thuộc tính 
+console.log("gender" in person); // nếu tồn tại: True - nếu không: False
+
+// Duyệt qua các thuộc tính
+for (var key in person){
+    console.log(key + ": " + person[key]);
+}
+
+/*----------------------- BT 3.1 ---------------------------*/
+/* Constructors và Prototypes*/
+
+function Customor(firstName, lastName, age){ // Sử dụng Constructor function để tạo đối tượng 
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.age = age;
+}
+
+Customor.prototype.getFullName = function(){ // Thêm phương thức vào vào prototype
+    return this.firstName + "" + this.lastName;
+};
+
+var person = new Customor("Nguyễn", "A", 30); // Tạo đối tượng từ Constructor
+
+console.log(person.getFullName()); 
+
+/* Object Methods */
+
+var customer = {
+    firstName: "A",
+    lastName: "Nguyễn",
+    age: 30
+};
+
+var keys = Object.keys(customer); // "Object.keys()" sẽ lấy tất cả các tên của đối tượng  
+console.log("Keys:", keys);  // ["FirstName", "LastName", "Age"]
+
+var values = Object.values(customer); // "Object.values()" sẽ lấy mảng chứa tất cả các giá trị của đối tượng 
+console.log("Values:", values); // ["A", "Nguyễn", 30]
+
+var entries = Object.entries(customer); // "Object.entries()" sẽ lấy mảng chứa các cặp key-value của đối tượng (Tổng hợp của 2 yếu tố trên)
+console.log("Entries:", entries); // [["FirstName", "A"], ["LastName", "Nguyễn"], ["Age", 30]]
+
+/* JSON (JavaScript Object Notation) */
+// KN: JSON (JavaScript Object Notation) là một định dạng truyền tải dữ liệu giữa máy chủ và trình duyệt web, hay giữa các hệ thống khác nhau. VD ở dưới:
+
+person = {                                   /* Các quy tắc về đối tượng JSON */
+    "FullName" : "Nguyễn Mạnh",                 // 1) Kiểu Dữ liệu "Key-Value Pairs" (Cặp Key-Value)
+    "Age" : 30,                                 // 2) Key Phải là Chuỗi (String) và đặt trong dấu ngoặc kép
+    "IsStudent" : false,                        // 3) Giá trị có thể là số, chuỗi, Boolean, mảng, đối tượng hoặc `null`
+    "DateOfBirth" : "2002-11-01",               // 4) Dấu ngoặc kéo mở và đóng: bắt đầu bằng `{` và kết thúc bằng `}`
+    "Courses" : ["Math", "History"],            // 5) Phân cách giữa các cặp key-value bằng dấu phẩy `,`
+    "Address" : {                               // 6) Mảng và đối tượng đều có thể chứa nhiều giá trị
+        "city": "Hà Nội",                       // 7) Giá trị ngày tháng phải ở dạng chuỗi
+        "zipcode": "10001"                      // 8) Value không thể là undefined hoặc chứa phương thức
+    }
+}
+
+/* Làm việc với JS và JSON */
+
+// Cho VD1: Tạo đối tượng JSON
+var customer = {
+    firstName: "A",
+    lastName: "Nguyễn",
+    age: 30
+};
+                                // Kết quả:
+console.log("Đối tượng JS:");   // Đối tượng JS:
+console.log(customer);          // { firstName: 'A', lastName: 'Nguyễn', age: 30 }
+
+// Cho VD2: Chuyển đổi đối tượng JS thành chuỗi JSON với stringify
+var jsonString = JSON.stringify(customer, null, 2);
+                                // Kết quả:
+console.log("\nChuỗi JSON:");   // Chuỗi JSON:
+console.log(jsonString);        // {
+//                                   "firstName": "A",
+//                                   "lastName": "Nguyễn",
+//                                   "age": 30
+//                                 }
+
+// Cho VD3: Chuyển chuỗi JSON thành thành đối tượng JS với parse
+var parsedCustomer = JSON.parse(jsonString);
+                                // Kết quả:
+console.log("\nĐối tượng JS:"); // Đối tượng JS:
+console.log(parsedCustomer);    // { firstName: 'A', lastName: 'Nguyễn', age: 30 }
+
+/*-------------------------------- Phần 4: ĐIỀU KIÊN & VÒNG LẶP ---------------------------------*/
+/*----------------------- BT 4.1 ---------------------------*/
+// Câu lệnh điều kiện, Cho VD:
+
+let age = 18;
+if (age >= 18){
+    console.log("Bạn đã đủ và trên 18 tuổi");
+}
+else{
+    console.log("Bạn chưa đủ 18 tuổi");
+}
