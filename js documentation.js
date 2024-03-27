@@ -1,4 +1,5 @@
 /* Có thể tìm danh mục bài tập và danh mục phần bành cách nhấn tổ hợp Ctrl + F và gõ BT/Phần + số danh mục muốn xem */
+/* !!! Sử dụng môi trưởng Console của trình duyệt Website hoặc note.js để làm môi trường chạy các ví dụ bên dưới !!! */
 
 /*--------------------------------Phần 1: Các biến---------------------------------*/
 /*----------------------- BT 1.1 ---------------------------*/
@@ -299,3 +300,13 @@ var foundIndex = numbers.findIndex(function(number){ // Trả về index của p
 var fruits = ["Apple", "Orange", "Banana"];          // Kiểm tra một giá trị có tồn tại hay không.
 var isOrangeInclude = fruits.includes("Orange");     // Có thì trả về true, không thì trả về false
 // isBananaIncluded: true
+
+// VII) Kiểm tra mảng với .some() và .every()
+
+/* some(): Dùng để kiểm tra trong mảng có ít nhất 1 phần tử thoả mãn điều kiện hay không */
+var numbers = [1, 3, 5, 7, 9]; // true: thoả mãn - false: không thoả mãn
+var hasEvenNumber = number.some(function(number){ // Kiểm tra xem có phần tử 
+    return number % 2 === 0;                      // chia hết cho 2 hay không
+});
+console.log(hasEvenNumber); //false
+
