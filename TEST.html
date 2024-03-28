@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>DOM Manipulation example</title>
+    </head>
+    <body>
+        <div id="myList">
+            <ul>
+                <li>Item1</li>
+                <li>Item2</li>
+                <li>Item3</li>
+            </ul>
+        </div>
+
+        <script>
+            let newListElement = document.createElement('li');
+            let newListText = document.createTextNode('Item4');
+            newListElement.appendChild(newListText);
+
+            let list = document.querySelector('#myList ul');
+            list.appendChild(newListElement);
+        </script> 
+    </body>
+</html>

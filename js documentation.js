@@ -1,7 +1,7 @@
 /* Có thể tìm danh mục bài tập và danh mục phần bành cách nhấn tổ hợp Ctrl + F và gõ BT/Phần + số danh mục muốn xem */
 /* !!! Sử dụng môi trưởng Console của trình duyệt Website hoặc node.js để làm môi trường chạy các ví dụ bên dưới !!! */
 
-/*--------------------------------Phần 1: BIẾN---------------------------------*/
+/*-------------------------------- Phần 1: BIẾN ---------------------------------*/
 /*----------------------- BT 1.1 ---------------------------*/
 
 // Khai báo các biến "var, let, const"
@@ -537,3 +537,71 @@ function factoria(n){
 console.log(factoria(5)); // KQ = 120
 
 // 2) Generator Function(hàm tạo): : sử dụng để tạo ra một chuỗi giá trị qua thời gian, có khả năng tạm dừng và tiếp tục thực thi
+// Lưu ý: Giúp tối ưu hoá việc sử dụng bộ nhớ và có thể giúp xử lý các tác vụ liên quan đến lượng dữ liệu lớn một cách hiệu quả hơn.
+
+// Generator function để tạo ra chuỗi số nguyên chẵn
+function* evenNumberGenerator(max){
+    let num = 0;
+    while (num <= max){
+        yield num;
+        num += 2;
+    }
+}
+
+// Tạo một instance của generator
+const evenNumGen = evenNumberGenerator(10);
+
+// Lấy giá trị từ generator
+console.log(evenNumGen.next().value); // 0
+console.log(evenNumGen.next().value); // 2
+console.log(evenNumGen.next().value); // 4
+console.log(evenNumGen.next().value); // 6
+console.log(evenNumGen.next().value); // 8
+console.log(evenNumGen.next().value)  // 10
+
+/*----------------------- BT 5.4 ---------------------------*/
+// Hàm Constructor Function: hàm đặc biệt để tạo đối tượng. Thường gọi bằng “new”
+
+// ví dụ Contructor fuction cho đối tượng Person
+function Person(name, age, job){
+    this.name = name;
+    this.age = age;
+    this.job = job;
+    this.sayHello = function(){
+        console.log(`Hello, my name is ${this.name} and I am ${this.age} years old. I work as a ${this.job}`);
+    };
+}
+
+// Thêm các instance mới cho các giá trị của Person
+let person1 = new Person("John", 30, "Developer");
+let person2 = new Person("Marry", 25, "Desinger");
+
+// Gọi phương thức sayHello từ instance 
+person1.sayHello();
+person2.sayHello();
+
+/*----------------------- BT 5.5 ---------------------------*/
+// Hàm IIFE (Immediately Invoked function Expression): Là hàm được gọi ngay lập tức khi định nghĩa, thường sử dụng để tạo phạm vi cục bộ
+// Lưu ý: IIFE là một cách tiện lợi để tạo ra một phạm vi cục bộ ngay lập tức mà không làm ảnh hưởng đến phạm vi toàn cục và tránh xung đột biến toàn cục. Điều này giúp tăng tính bảo mật và đảm bảo tính độc lập của mã JavaScript.
+(function(){ // Hàm IIFE
+    const sidebarExpandButton = document.querySelector("#sidebar");
+    sidebarExpandButton.addEventListener("click", ()=>{
+        document.querySelector("#sidebarFull").style.visibility = "visible"; // Hiển thị Sidebar mở rộng
+    })
+})()
+
+// Biến sidebarExpandButton được khai báo trong IIEF nên không thể truy cập bên ngoài 
+console.log(sidebarExpandButton); // ->> Lỗi Uncaught ReferenceError: sidebarExpandButton is not defined
+
+/*-------------------------------- Phần 6: LÀM VIỆC VỚI DOM ---------------------------------*/
+/*----------------------- BT 6.1 ---------------------------*/
+// DOM Manipulation (xử lý DOM): là quá trình thay đổi cấu trúc, nội dung hoặc kiểu dáng của các phần tử trên trang web bằng cách sử dụng JavaScript
+// Để hiểu rõ hơn ví dụ hãy truy cập phần TEST.html 
+
+//  Thêm một phần tử vào danh sách
+let newListElement = document.createElement("li");
+let newListText = document.createTextNode("Item4");
+newListElement.appendChild(newListText);
+
+let list = document.querySelector("#myList ul");
+list.appendChild(newListElement);
