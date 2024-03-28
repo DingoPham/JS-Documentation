@@ -480,4 +480,60 @@ for (const prop in customer){
 
 /*-------------------------------- Phần 5: HÀM ---------------------------------*/
 /*----------------------- BT 5.1 ---------------------------*/
-// Hàm
+// KN: Định nghĩa hàm bằng cách sử dụng function và truyền tham số. Sử dụng return để trả về giá trị từ hàm 
+// 1) Regular function: hàm cơ bản, gọi thông qua tên hàm, có thể nhận đối số và trả về kết quả.
+
+function greet(name){
+    return "Hello, " + name + "!"; 
+}
+let message = greet("Mạnh");
+console.log(message);
+
+// 2) Arrow function: : Không có “this” riêng biệt và thường sử dụng cho các hàm ngắn gọn.
+
+function sumFunction(a, b){ // Tính tổng của regular function
+    return a + b;
+};
+
+const sumShort = (a, b) => a + b; // Tính tổng của arrow function
+
+console.log(sumFunction(5, 3)); // KQ = 8
+console.log(sumShort(5, 3)); //KQ = 8
+/*----------------------- BT 5.2 ---------------------------*/
+// KN Hàm Callback: là một hàm được truyền và được gọi lại thực thi trong một hàm khác và thường sử dụng trong xử lý bất đồng bộ
+function fetchData(callback){ // Hàm fetchData() mô phỏng việc lấy dữ liệu từ server sau một khoảng thời gian 
+    fetch('/api/v1/customer')
+    .then(data=>data.json())
+    .then(data=>{
+        callback(data);
+    })
+    .catch(error=>{
+        console.error(error);
+    });
+}
+
+// Hàm callback được truyền vào fetchData
+function displayData(data){
+    console.log(data);
+}
+
+// Gọi hàm fetchData với hàm callback bằng displayData
+fetchData(displayData);
+
+/*----------------------- BT 5.3 ---------------------------*/
+// Hàm Reccursive Function & Generator Function
+// 1) Reccursive Function(Hàm đệ quy): Gọi chính nó để giải quyết vấn đề. Cần có điểm dừng để tránh vòng lặp vô hạn.
+// Lưu ý: cần có điểm dừng để tránh bị lặp vô hạn
+
+function factoria(n){
+    if (n === 0 || n === 1){ // Trường hợp cơ bản n = 0 hoặc n = 1
+        return 1;
+    }
+    else { // Trường hợp đệ quy
+        return n * factoria(n - 1);
+    }
+}
+
+console.log(factoria(5)); // KQ = 120
+
+// 2) Generator Function(hàm tạo): : sử dụng để tạo ra một chuỗi giá trị qua thời gian, có khả năng tạm dừng và tiếp tục thực thi
