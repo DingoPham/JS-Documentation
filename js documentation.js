@@ -594,6 +594,7 @@ person2.sayHello();
 console.log(sidebarExpandButton); // ->> Lỗi Uncaught ReferenceError: sidebarExpandButton is not defined
 
 /*-------------------------------- Phần 6: LÀM VIỆC VỚI DOM ---------------------------------*/
+//Lưu ý: Trong phần này rất cần đến cả phần code của HTML lên hầu hết các dòng code JS lên được chạy thử ở bên HTML
 /*----------------------- BT 6.1 ---------------------------*/
 // DOM Manipulation (xử lý DOM): là quá trình thay đổi cấu trúc, nội dung hoặc kiểu dáng của các phần tử trên trang web bằng cách sử dụng JavaScript
 // Để hiểu rõ hơn ví dụ hãy truy cập phần TEST.html 
@@ -605,3 +606,188 @@ newListElement.appendChild(newListText);
 
 let list = document.querySelector("#myList ul");
 list.appendChild(newListElement);
+
+/*----------------------- BT 6.2 ---------------------------*/
+// Lấy phần tử trong DOM 
+// 1) getElementById 
+let elementById = document.getElementById('myId');
+// 2) getElementByClassName
+let elementByClass = document.getElementsByClassName('myClass');
+// 3) getElementByTagName 
+let elementByTag = document.getElementsByTag('div');
+// 4) getElementByName 
+let elementByName = document.getElementsByName('myName');
+// 5) querySelector
+let elementEl = document.querySelector('#myElementId');
+// 6) querySelectorAll 
+let elementEls = document.querySelectorAll('.myClassName');
+
+/*----------------------- BT 6.3 ---------------------------*/
+// DOM - Traversings: Traversing là việc di chuyển qua các phần tử hoặc các thành phần trong cây DOM. Cụ thể, đó là việc đi lên, đi xuống hoặc đi ngang qua các Node (nodes) trong cây DOM để truy cập, thay đổi hoặc tương tác với chúng.
+// 1) parentNode và parentElement
+// 2) childNodes hoặc children
+// 3) firstChild và lastChild
+// 4) nextSibling và previousSibling
+// 5) nextElementSibling và previousElementSibling
+// 6) querySelector và querySelectorAll (kết hợp với CSS selectors)
+
+/*----------------------- BT 6.4 ---------------------------*/
+// Traversings – parentNode & parentElement
+
+// parentNode: là một thuộc tính của mọi Node trong cây DOM (bao gồm cả element và không phải là element).
+//   + Nó trả về Node cha trực tiếp của Node đó
+//   + Nếu Node đó là một element, parentNode sẽ trả về element cha của nó
+//   + Nếu Node đó không phải là element, parentNode sẽ trả về Node cha không phải element(ví dụ, một Node văn bản nằm giữa các element).
+
+// parentElement: là một thuộc tính chỉ có sẵn trên các phần tử (element) trong DOM
+//   + Nó trả về phần tử cha trực tiếp của phần tử đó
+//   + Nếu phần tử đó không có phần tử cha (ví dụ, nó là phần tử gốc), parentElement sẽ trả về null 
+// VD: Lấy element cha
+let parent = element.parentNode;
+let parentEl = element.parentElement;
+
+// Lưu ý: Sử dụng parentNode nếu bạn đang làm việc với Node và muốn truy cập phần tử cha, hoặc bạn có thể
+// sử dụng parentElement nếu bạn chắc chắn rằng bạn đang làm việc với một phần tử và muốn truy cập
+// phần tử cha của nó.
+
+/*----------------------- BT 6.5 ---------------------------*/
+// Traversings – childNode & childElement
+
+// childNode:  trả về một NodeList chứa tất cả các Node con, bao gồm cả các Node văn bản, Node trống (thể hiện khoảng trắng giữa các thẻ), và các Node khác không phải là phần tử. 
+//   + NodeList này bao gồm tất cả các Node con, không chỉ các phần tử con.
+
+// childElement: n trả về một HTMLCollection chỉ chứa các phần tử con, bỏ qua các Node văn bản và các Node khác không phải là phần tử.
+//   + HTMLCollection này chỉ chứa các phần tử con, không bao gồm các Node khác
+
+let parentElement = document.getElementById("parent"); // Xem trực tiếp bên phần TEST.html
+
+// NodeList bao gồm 5 nút: 3 phần tử, 1 nút văn bản, 1 comment node
+let childNodes = parent.childNodes;
+//HTMLCollection bao gồm 2 phần tử: 2 phần tử thẻ <p>
+let children = parent.children;
+
+// Lưu ý: Khi bạn chỉ quan tâm đến các phần tử con và muốn bỏ qua các Node văn bản và Node khác, children
+//  thường được ưa chuộng hơn để giảm sự phức tạp và dễ sử dụng hơn trong nhiều trường hợp
+
+/*----------------------- BT 6.6 ---------------------------*/
+// Traversings – truy cập phần tử liền kề
+// 1)  nextSibling và previousSibling 
+//  + Trả về phần tử kế tiếp (nextSibling) hoặc phía trước (previousSibling) trong danh sách con của Zcùng một phần tử cha.
+//  + Bao gồm cả các Node văn bản và Node trống (nodeType 3)
+//  + Có thể chứa các Node không phải là phần tử
+
+// 2) nextElementSibling và previousElementSibling
+//  + Trả về phần tử kế tiếp (nextSibling) hoặc phía trước (previousSibling) trong danh sách con của cùng một phần tử cha
+//  + Chỉ chứa các phần tử (nodeType 1), bỏ qua Node văn bản và các Node khác không phải là phần tử
+
+let listItem2 = document.getElementById("item2");
+
+// Sử dụng nextSibling để lấy nút kế tiếp (cả text node và element node)
+let nextSibling = listItem2.nextSibling
+console.log(nextSibling.textContent); // In ra khoảng trắng vì nó là text node
+
+// Sử dụng nextElementSibling để lấy phần tử kế tiếp(chỉ element node)
+let nextElementSibling = listItem2.nextElementSibling;
+console.log(nextElementSibling.textContent); // In ra "Item3"
+// Xem trực tiếp bên phần TEST.html
+
+/*----------------------- BT 6.7 ---------------------------*/
+// Traversings – querySelector & querySelectorAll
+// 1) querySelector
+//  + querySelector trả về phần tử đầu tiên phù hợp với selector được chỉ định
+//  + Nếu không tìm thấy phần tử nào, nó trả về null
+//  + ! Chỉ trả về một phần tử, dù có nhiều phần tử khớp với selector !
+let element = document.querySelector(".myClass");
+
+// 2) querySelectorAll 
+//  + querySelectorAll trả về một NodeList chứa tất cả các phần tử phù hợp với selector được chỉ định
+//  + Nếu không tìm thấy phần tử nào, nó trả về một NodeList trống.
+//  + ! Trả về tất cả các phần tử khớp với selector, không chỉ là phần tử đầu tiên !
+let elements = document.querySelectorAll(".myClass");
+
+/*-------------------------------- Phần 7: SỰ KIỆN(EVENT) ---------------------------------*/
+// KN về Event: 
+//  - Là một hành động hoặc tình huống mà trình duyệt web hoặc môi trường thực thi JavaScript ghi nhận và thông báo cho mã JavaScript để xử lý
+//  - Các sự kiện có thể xuất phát từ người dùng (nhấp chuột, nhấn phím, kéo thả) hoặc từ các hoạt động khác trên trang web (tải trang, thay đổi kích thước cửa sổ trình duyệt).
+
+// Một số Event phổ biến: 
+// 1) click, dblclick
+// 2) keydown, keyup, keypress
+// 3) mouseorver, mouserout
+// 4) submit
+// 5) load
+// 6) change
+
+// Lấy tham chiếu đến phần tử có id là myButton
+var myButton = document.getElementById("myButton");
+
+// Gán kết event click với một hàm xử lý
+myButton.addEventListener("click", function(){
+    // xử lý logic...
+});
+
+/*----------------------- BT 7.1 ---------------------------*/
+// Event Propagation - Lan truyền sự kiện
+//  Trong javascrip khi có các phần tử lồng nhau và xảy ra sự kiện, các sự kiện sẽ trải qua ba giai đoạn chính:
+// 1) Capturing Phase (Giai đoạn nắm bắt):
+//   - Sự kiện được bắt đầu từ phần tử gốc của cây DOM (thường là “document”) và di chuyển xuống tới phần tử target
+//   - Nếu Element được đặt một xử lý sự kiện ở giai đoạn này (bằng cách sử dụng `addEventListener` với `{capture:true}`, nó sẽ được gọi đầu tiên
+// 2) Target Phase (Giai đoạn mục tiêu): Sự kiện đến phần tử mục tiêu (element mà sự kiện đã xảy ra)
+// 3) Buddling Phase (Giai đoạn nổi lên): Sự kiện bắt đầu từ phần tử mục tiêu và lan tỏa lên từ phần tử con đến phần tử cha, cho đến khi đến phần tử gốc (thường là `document`)
+
+/*----------------------- BT 7.2 ---------------------------*/
+// Event Delegation – Uỷ quyền sự kiện
+//  Delegation (sự ủy quyền) tức là khi ta tạo 1 sự kiện cho phần tử cha, thì các phần tử con bên trong cũng nhận được event đó
+// VD: Tạo sự kiện click cho document thì tất cả các phần tử con (div, button, table….) sẽ đều nhận được sự kiện click này ==
+document.addEventListener("click", function(){ //                                                                            ||
+    // Hiển thị tagName (số lần click) của element được click:                                                                              ||
+    console.log(event.target.tagName);//  <==================================================================================                                                                                  
+})  // Xem trực tiếp bên phần TEST.html
+
+/*----------------------- BT 7.3 ---------------------------*/
+// Event Object – các đối tượng sự kiện: trong JavaScript là một đối tượng chứa thông tin và thuộc tính liên quan đến sự kiện
+//  đã xảy ra. Khi một sự kiện được kích hoạt, trình duyệt tạo một đối tượng sự kiện và truyền nó cho
+//  hàm xử lý sự kiện được đăng ký
+
+// Một số thuộc tính thông thường của Đối tượng sự kiện:
+// + `event.type`: Trả về chuỗi biểu thị loại sự kiện (VD: “click”)
+// + `event.target`: Chỉ đến phần sử mà sự kiện được kích hoạt
+// + `event.clientX` và `event.clientY`: cung cấp toạ độ ngang và dọc của con trỏ chuột
+
+var myButton = document.getElementById("myButton");
+// Gán event click:
+myButton.addEventListener("click", function (event){
+    // Truy cập thông tin từ Event Object
+    console.log("Loại sự kiện: ", event.type);
+    console.log("Phần tử kích hoạt sự kiện: ", event.target);
+    console.log("Toạ độ X, Y của con trỏ chuột: ", "X: ", event.clientX, "Y: ", event.clientY);
+});
+
+/*----------------------- BT 7.4 ---------------------------*/
+// Cách kiểm soát các lắng nghe và xử lý sự kiện
+
+/* Option 1: */
+// addEventListener():
+//  + Sử dụng để đăng ký lắng nghe một sự kiện trên một phần tử DOM cụ thể
+//  + Có thể kiểm soát giai đoạn nắm bắt và nổi lên bằng cách sử dụng tuỳ chọn `{capture: true}` hoặc `{capture: false}` 
+//    mặc định không thiết lập thì capture là false.
+const button = document.getElementById("myButton");
+// Lắng nghe event click ở giai đoạn nắm bắt (capture phase)
+button.addEventListener("click", function(){
+    console.log("Button Clicked!");
+}, true);
+
+// removeEventListener(): 
+//  + Để huỷ bỏ lắng nghe sự kiện đã đăng ký
+button.removeEventListener("click", clickHandler); // Huỷ bỏ lắng nghe Event
+// Lưu ý: Khi đăng ký các sự kiện cần phải luôn đi kèm với việc hủy bỏ để tránh leak (rò rỉ bộ nhớ).
+
+/* Option 2: */
+// once option(): : sử dụng tùy chọn `{once: true}` khi đăng ký lắng nghe sự kiện để chỉ lắng nghe sự kiện một lần và tự động hủy bỏ sau khi xử lý.
+const myButton = document.getElementById("myButton");
+myButton.addEventListener("click", function(){
+    console.log("Button Clicked!");
+},{once: true});
+
+/*----------------------- BT 7.5 ---------------------------*/
+// Cách kiểm soát các lắng nghe và xử lý sự kiện

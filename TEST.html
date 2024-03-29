@@ -3,13 +3,31 @@
     <head>
         <title>DOM Manipulation example</title>
     </head>
-    <body>
+    <body style="margin-left: 30px;">
         <div id="myList">
             <ul>
                 <li>Item1</li>
                 <li>Item2</li>
                 <li>Item3</li>
             </ul>
+        </div>
+
+        <div id="parent">
+            <p>Paragraph 1</p>
+            <!-- Comment Node -->
+            <span>Span Element</span>
+            Text Node
+            <p>Paragraph 2</p> 
+        </div>
+
+        <ul>
+            <li id="item1">Item1</li>
+            <li id="item2">Item2</li>
+            <li id="item3">Item3</li>
+        </ul>
+
+        <div class="parent" style="margin-bottom: 30px;">
+            <button class="child">Child</button>
         </div>
 
         <script>
@@ -19,6 +37,36 @@
 
             let list = document.querySelector('#myList ul');
             list.appendChild(newListElement);
+
+            /*------------------------------------------------------*/
+
+            let parentElement = document.getElementById("parent");
+
+            // NodeList bao gồm 5 nút: 3 phần tử, 1 nút văn bản, 1 comment node
+            let childNodes = parent.childNodes;
+            //HTMLCollection bao gồm 2 phần tử: 2 phần tử thẻ <p>
+            let children = parent.children;
+
+            /*------------------------------------------------------*/
+
+            let listItem2 = document.getElementById("item2");
+
+            // Sử dụng nextSibling để lấy nút kế tiếp (cả text node và element node)
+            let nextSibling = listItem2.nextSibling
+            console.log(nextSibling.textContent); // In ra khoảng trắng vì nó là text node
+
+            // Sử dụng nextElementSibling để lấy phần tử kế tiếp(chỉ element node)
+            let nextElementSibling = listItem2.nextElementSibling;
+            console.log(nextElementSibling.textContent); // In ra "Item3"
+
+            /*------------------------------------------------------*/
+
+            document.addEventListener("click", function(){                                                             
+                // Hiển thị tagName(số lần click) của element được click:                                                                              
+                console.log(event.target.tagName);
+            })
+
+            /*------------------------------------------------------*/
         </script> 
     </body>
 </html>
