@@ -766,7 +766,7 @@ myButton.addEventListener("click", function (event){
 /*----------------------- BT 7.4 ---------------------------*/
 // Cách kiểm soát các lắng nghe và xử lý sự kiện
 
-/* Option 1: */
+/* Course 1: */
 // addEventListener():
 //  + Sử dụng để đăng ký lắng nghe một sự kiện trên một phần tử DOM cụ thể
 //  + Có thể kiểm soát giai đoạn nắm bắt và nổi lên bằng cách sử dụng tuỳ chọn `{capture: true}` hoặc `{capture: false}` 
@@ -782,12 +782,145 @@ button.addEventListener("click", function(){
 button.removeEventListener("click", clickHandler); // Huỷ bỏ lắng nghe Event
 // Lưu ý: Khi đăng ký các sự kiện cần phải luôn đi kèm với việc hủy bỏ để tránh leak (rò rỉ bộ nhớ).
 
-/* Option 2: */
-// once option(): : sử dụng tùy chọn `{once: true}` khi đăng ký lắng nghe sự kiện để chỉ lắng nghe sự kiện một lần và tự động hủy bỏ sau khi xử lý.
+/* Course 2: */
+// once option(): Sử dụng tùy chọn `{once: true}` khi đăng ký lắng nghe sự kiện để chỉ lắng nghe sự kiện một lần và tự động hủy bỏ sau khi xử lý.
 const myButton = document.getElementById("myButton");
 myButton.addEventListener("click", function(){
     console.log("Button Clicked!");
 },{once: true});
 
+/* Course 3: */
+// stopPropagation() : Ngăn chặn sự lan truyền sự kiện lên hoặc xuống các phần tử khác.
+document.getElementById("container").addEventListener("click", function(){
+    console.log("Container clicked!");
+});
+
+document.getElementById("btnAdd").addEventListener("click", function(){
+    console.log("Button clicked!");
+    event.stopPropagation(); // Ngăn lan truyền event lên hoặc xuống(Ngăn lan truyền event lên element cha(container) )
+})
+
+/* Course 4: */
+// preventDefault(): Ngăn hành vi mặc định của sự kiện.
+
+const linkItem = document.getElementsByClassName("menu-item__link");
+    for (const link of linkItem){
+        link.addEventListener("click", ()=>{
+            console.log("Link Clicked!");
+            event.preventDefault(); // ngăn chặn mở liên kết(Ngăn hành vi mặc định của event(khi click vào thẻ <a>) )
+        })
+    }
+
+/*-------------------------------- Phần 7: SỰ KIỆN(EVENT) ---------------------------------*/
+/*----------------------- BT 7.4 ---------------------------*/
+// Từ khoá "this" Là một biến đặc biệt tham chiếu đến đối tượng mà nó được sử dụng bên trong
+// “this” thay đổi tùy theo ngữ cảnh mà nó được sử dụng:
+// - Trong phạm vi Global, không có hàm hoặc đối tượng bao quanh: “this” trỏ đến đối tượng “window” trong môi trường trình duyệt hoặc “global” trong môi trường Node.js
+// - Trong một sự kiện DOM: “this” trỏ đến phần tử DOM mà sự kiện được kích hoạt:
+
+document.getElementById('mySecondButton').addEventListener('click', function(){
+    console.log(this);
+});
+
 /*----------------------- BT 7.5 ---------------------------*/
-// Cách kiểm soát các lắng nghe và xử lý sự kiện
+// 1) Trường hợp sử dụng “this” trong hàm của đối tượng. “this” sẽ tham chiếu đến đối tượng đó
+
+// Trường hợp sử dụng this trong phương thức của đối tượng
+let car = {
+    brand: "Toyota",
+    displayBrand: function(){
+        console.log(this.brand); // this ở đây tham chiếu đến đối tượng car
+    }
+};
+
+car.displayBrand(); // KQ sẽ là Toyota
+
+// 2) Trong một hàm thường: ‘this’ phụ thuộc vào cách hàm đó được gọi. Nếu được gọi từ đối tượng thì “this” thường trỏ đến đối tượng đó. Nếu không nó có thể trỏ đến “window” trong môi trường trình duyệt hoặc “global” trong Node.js
+
+// Trường hợp dùng this trong hàm thường
+function saySomething(){
+    console.log(this); // this ở đâu tham chiếu đến global object hoặc underfined trong "strict mode"
+}
+
+saySomething(); // KQ trả về sẽ phụ thuộc vào ngữ cảnh gọi hàm
+
+/*----------------------- BT 7.5 ---------------------------*/
+// "this" trong Arrow Function: “this” sử dụng giá trị từ phạm vi bên ngoài (lexical scope)
+
+// Sử dụng this trong arrow function
+let person = {
+    firstName: 'John',
+    lastName: 'Doe',
+    fullName: function(){
+        return () => { 
+            console.log(this.firstName + " " + this.lastName); // this ở đây kế thừa phạm vi bên ngoài của Arrow function
+        }
+    }
+}
+
+let fullNameFunc = person.fullName();
+fullNameFunc(); // KQ sẽ là John Doe
+
+/* ------------------------------ */
+
+// Sử dụng với việc sử dụng this trong hàm thông thường
+let person3 = {
+    firstName: 'John',
+    lastName: 'Doe',
+    fullName: function(){
+        return function(){
+            console.log(this.firstName + " " + this.lastName);
+        }
+    }
+}
+
+let fullNameFunc2 = person3.fullName();
+fullNameFunc(); // KQ trả về sẽ là 'underfined underfined' vì this tham chiếu mức global
+
+/*----------------------- BT 7.6 ---------------------------*/
+// Cách kiểm soát this: Đảm bảo rằng this sẽ tham chiếu đúng đối tượng mà bạn mong đợi trong mọi tình huống
+
+// 1) binding: Sử dụng phương thức bind() để tạo một hàm mới có giá trị this đã được ràng buộc sẵn
+
+// Sử dụng bind để rằng buộc giá trị this
+let person = {
+    name1: "John Doe",
+    getName: function(){
+        return this.name1;
+    }
+};
+
+let getNameF = person.getName;
+let boundGetNameF = getNameF.bind(person);
+
+console.log(boundGetNameF()); // KQ là John Doe
+
+// 2) Sử dụng arrow function: this sẽ không được gắn liên quan đến ngữ cảnh của nó mà sẽ kế thừa giá trị this từ phạm vi bên ngoài
+
+// Sử dụng arrow function để kiểm soát giá trị this
+let obj = {
+    name3: "John Doe",
+    logName: function(){
+        setTimeout(() => {
+            console.log(this.name3); // this ở đây kế thừa giá trị của name3
+        }, 1000);
+    }
+};
+
+obj.logName(); // KQ sẽ là John Doe được xuất hiện sau 1 giây
+
+// 3) Lưu giá trị this vào một biến khác để sử dụng trong ngữ cảnh khác nhau:
+
+// Lưu giá trị của this với biến khác
+let obj2 = {
+    name3: "John Doe",
+    logName: function(){
+        let self = this;
+
+        setTimeout(function(){
+            console.log(self.name3); // Sử dụng self thay vì this trong hàm Timeout
+        }, 1000); // thời gian timeout
+    }
+};
+
+obj2.logName(); // KQ sẽ là John Doe được xuất hiện sau 1 giây

@@ -30,6 +30,15 @@
             <button class="child">Child</button>
         </div>
 
+        <div id="container" style="margin-bottom: 30px;">
+            <button id="btnAdd">Thêm mới!</button>
+        </div>
+        
+        <a href="/customer.html" class="menu-item__link">Khách hàng</a>
+        <a href="/employee.html" class="menu-item__link">Nhân viên</a>
+
+        <button id="mySecondButton">Click!</button>
+
         <script>
             let newListElement = document.createElement('li');
             let newListText = document.createTextNode('Item4');
@@ -67,6 +76,31 @@
             })
 
             /*------------------------------------------------------*/
+
+            document.getElementById("container").addEventListener("click", function(){
+                console.log("Container clicked!");
+            });
+
+            document.getElementById("btnAdd").addEventListener("click", function(){
+                console.log("Button clicked!");
+                event.stopPropagation(); // Ngăn lan truyền event lên hoặc xuống(Ngăn lan truyền event lên element cha(container) ).
+            })
+
+            /*------------------------------------------------------*/
+
+            const linkItem = document.getElementsByClassName("menu-item__link");
+                for (const link of linkItem){
+                link.addEventListener("click", ()=>{
+                    console.log("Link Clicked!");
+                    event.preventDefault(); // ngăn chặn mở liên kết(Ngăn hành vi mặc định của event(khi click vào thẻ <a>) )
+                })
+            }
+
+            /*------------------------------------------------------*/
+
+            document.getElementById('mySecondButton').addEventListener('click', function(){
+                console.log(this); // this ở đây nhằm tham chiếu đến phần tử button
+            });
         </script> 
     </body>
 </html>
