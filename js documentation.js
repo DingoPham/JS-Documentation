@@ -811,8 +811,8 @@ const linkItem = document.getElementsByClassName("menu-item__link");
         })
     }
 
-/*-------------------------------- Phần 7: SỰ KIỆN(EVENT) ---------------------------------*/
-/*----------------------- BT 7.4 ---------------------------*/
+/*-------------------------------- Phần 8: THIS ---------------------------------*/
+/*----------------------- BT 8.1 ---------------------------*/
 // Từ khoá "this" Là một biến đặc biệt tham chiếu đến đối tượng mà nó được sử dụng bên trong
 // “this” thay đổi tùy theo ngữ cảnh mà nó được sử dụng:
 // - Trong phạm vi Global, không có hàm hoặc đối tượng bao quanh: “this” trỏ đến đối tượng “window” trong môi trường trình duyệt hoặc “global” trong môi trường Node.js
@@ -822,7 +822,7 @@ document.getElementById('mySecondButton').addEventListener('click', function(){
     console.log(this);
 });
 
-/*----------------------- BT 7.5 ---------------------------*/
+/*----------------------- BT 8.2 ---------------------------*/
 // 1) Trường hợp sử dụng “this” trong hàm của đối tượng. “this” sẽ tham chiếu đến đối tượng đó
 
 // Trường hợp sử dụng this trong phương thức của đối tượng
@@ -844,7 +844,7 @@ function saySomething(){
 
 saySomething(); // KQ trả về sẽ phụ thuộc vào ngữ cảnh gọi hàm
 
-/*----------------------- BT 7.5 ---------------------------*/
+/*----------------------- BT 8.3 ---------------------------*/
 // "this" trong Arrow Function: “this” sử dụng giá trị từ phạm vi bên ngoài (lexical scope)
 
 // Sử dụng this trong arrow function
@@ -877,7 +877,7 @@ let person3 = {
 let fullNameFunc2 = person3.fullName();
 fullNameFunc(); // KQ trả về sẽ là 'underfined underfined' vì this tham chiếu mức global
 
-/*----------------------- BT 7.6 ---------------------------*/
+/*----------------------- BT 8.4 ---------------------------*/
 // Cách kiểm soát this: Đảm bảo rằng this sẽ tham chiếu đúng đối tượng mà bạn mong đợi trong mọi tình huống
 
 // 1) binding: Sử dụng phương thức bind() để tạo một hàm mới có giá trị this đã được ràng buộc sẵn
@@ -924,3 +924,70 @@ let obj2 = {
 };
 
 obj2.logName(); // KQ sẽ là John Doe được xuất hiện sau 1 giây
+
+/*-------------------------------- Phần 9: XMLHttpRequest & FETCH API ---------------------------------*/
+/*----------------------- BT 9.1 ---------------------------*/
+// XMLHttpRequest là một đối tượng trong JavaScript được sử dụng để tạo và quản lý các yêu cầu HTTP và HTTPS từ một
+// trang web đến máy chủ. Nó giúp trang web tương tác với máy chủ mà không cần tải lại toàn bộ trang
+
+var xhr = new XMLHttpRequest();
+xhr.open('GET', 'https://www.youtube.com/api/data', true);
+
+xhr.onload = function (){
+    if (xhr.status >= 200 && xhr.status < 300){
+        console.log(xhr.responseText); // Xử lý dữ liệu nhận được từ máy chủ
+    }
+    else{
+        console.error("Yêu cầu không thành công. Mã lỗi: ", xhr.status); // Xử lý lỗi
+    }
+};
+
+xhr.send();
+
+/*----------------------- BT 9.2 ---------------------------*/
+// Fetch API: cung cấp một cách đơn giản và linh hoạt để tương tác với các dịch vụ web và các nguồn dữ
+// liệu từ xa khác. Sử dụng thay thế XMLHttpRequest do có hỗ trợ Promise và có cú pháp sạch hơn.
+
+fetch("https:api.example.com/data") // "fetch" là hàm gửi yêu cầu mạng
+    .then(response =>{ // "then" được sử dụng để xử lý phản hồi thành công từ yêu cầu
+        if (!response.ok){ // "reponse.ok" - kiểm tra xem yêu cầu mạng có thành công hay không
+            throw new Error("Network reponse was not ok");
+        }
+        return response.json(); // "reponse.json()" trả về một Promise chứa dữ liệu JSON từ phản hồi
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error =>{ // "catch" được sử dụng để xử lý lỗi nếu có bất kỳ vấn đề nào trong quá trình gửi yêu cầu
+        console.error("There has been a problem with your fetch operation: ", error);
+    });
+
+
+// ------------------------------------ Storage -------------------------------------- // 
+/* localStorage */
+// 1) Dung lượng: Ở mức độ nhiều hơn (tích trữ khoảng 5MB dữ liệu)
+// 2) Thời gian sống: Không hết hạn sau khi trình duyệt đóng
+// 3) Quản lý: Cần phải xóa bằng tay hoặc sử dụng các phương thức API
+// 4) Giao tiếp trình duyệt: Có thể truy cập từ bất kỳ trang nào trên tên miền
+// 5) An toàn: Same-origin policy áp dụng
+// 6) Tốc độ truy cập: Nhanh vì dữ liệu được lưu trữ cục bộ
+// 7) Sử dụng: Thích hợp cho việc lưu trữ dữ liệu dài hạn (VD: Lưu trữ thông tin giỏ hang, Token,…)
+
+/* sessionStorage */
+// 1) Dung lượng: Nhỏ hơn (tích trữ khoảng 5MB dữ liệu)
+// 2) Thời gian sống: Hết hạn sau khi trình duyệt đóng
+// 3) Quản lý:Tự động xóa sau khi trình duyệt đóng
+// 4) Giao tiếp trình duyệt: Chỉ có thể truy cập từ cửa sổ/tab tạo ra nó
+// 5) An toàn: Same-origin policy áp dụng 
+// 6) Tốc độ truy cập: Nhanh vì dữ liệu được lưu trữ cục bộ
+// 7) Sử dụng: Thích hợp cho việc lưu trữ dữ liệu ngắn hạn (CD: Thông tin về phiên đăng nhập của người dùng
+
+/* cookie */
+// 1) Dung lượng: Nhỏ hơn (tích trữ khoảng 4KB dữ liệu)
+// 2) Thời gian sống: Có thể được đặt để hết hạn sau một khoảng thời gian
+// 3) Quản lý: Có thể được xóa bằng tay hoặc hết hạn
+// 4) Giao tiếp trình duyệt: Có thể truy cập từ bất kỳ trang nào trên tên miền
+// 5) An toàn: Same-origin policy áp dụng
+// 6) Tốc độ truy cập: Chậm do việc gửi dữ liệu qua mỗi yêu cầu HTTP
+// 7) Sử dụng: Thích hợp cho việc lưu trữ dữ liệu nhỏ (VD: Thông tin đăng nhập, Token…)
+    
